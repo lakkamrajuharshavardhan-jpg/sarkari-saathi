@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-cream: #FAF7F2;
+    --bg-cream-card: #F4EFEB;
+    --text-ink: #1C1917;
+    --text-muted: #57534E;
+    --color-rust: #963628;
+    --color-rust-hover: #7D2C1F;
+    --color-forest: #2D5A43;
+    --border-stone: #E7E2D8;
+    --border-dark: #D4CDC1;
+  }
+
+  body {
+    background-color: #FAF7F2;
+    color: #1C1917;
+    font-family: 'Plus Jakarta Sans', 'Noto Sans Devanagari', -apple-system, sans-serif;
+  }
+
+  h1, h2, h3, .font-serif-title {
+    font-family: 'Playfair Display', 'Instrument Serif', Georgia, serif;
+  }
+
+  .font-instrument {
+    font-family: 'Instrument Serif', Georgia, serif;
+  }
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF7F2;
+}
+::-webkit-scrollbar-thumb {
+  background: #D4CDC1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #963628;
+}
+
+/* Subtle Glass / Cream Card Shadows */
+.card-warm {
+  background-color: #FAF7F2;
+  border: 1px solid #E7E2D8;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-warm:hover {
+  border-color: #C8C0B2;
+  box-shadow: 0 10px 30px -10px rgba(28, 25, 23, 0.08);
+}
+
+/* Print Styles for Jan Seva Kendra Help Desk Sheet */
+@media print {
+  body {
+    background-color: white !important;
+    color: black !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .print-card {
+    border: 1px solid #000 !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+  }
+}
