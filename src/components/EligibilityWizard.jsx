@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
-import { ArrowLeft, ArrowRight, CheckCircle2, User, Sparkles, MapPin, Briefcase, IndianRupee, Layers } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle2, User, Sparkles, MapPin, Briefcase, IndianRupee, Layers, GraduationCap } from 'lucide-react';
 import { translations } from '../data/translations';
 
 export default function EligibilityWizard({ lang, onSubmitProfile, onCancel }) {
   const t = translations[lang];
   const [currentStep, setCurrentStep] = useState(1);
 
-  // Profile Form State
+  // Expanded Profile Form State for both Schemes & Exams
   const [profile, setProfile] = useState({
-    age: 28,
+    age: 26,
     gender: 'Female',
+    isPwd: false,
+    isExServiceman: false,
     income: 'incomeBelow1L',
-    occupation: 'occFarmer',
+    occupation: 'occUnemployed',
+    degree: 'degreeGrad',
+    stream: 'streamAll',
+    percentage: 68,
     category: 'catOBC',
     state: 'Uttar Pradesh',
     area: 'areaRural'
@@ -23,19 +28,29 @@ export default function EligibilityWizard({ lang, onSubmitProfile, onCancel }) {
       setProfile({
         age: 42,
         gender: 'Male',
+        isPwd: false,
+        isExServiceman: false,
         income: 'incomeBelow1L',
         occupation: 'occFarmer',
+        degree: 'degree10th',
+        stream: 'streamAll',
+        percentage: 55,
         category: 'catOBC',
         state: 'Uttar Pradesh',
         area: 'areaRural'
       });
     } else if (type === 'student') {
       setProfile({
-        age: 20,
+        age: 24,
         gender: 'Female',
+        isPwd: false,
+        isExServiceman: false,
         income: 'income1to3L',
         occupation: 'occStudent',
-        category: 'catSC',
+        degree: 'degreeTech',
+        stream: 'streamEngineering',
+        percentage: 75,
+        category: 'catOBC',
         state: 'Bihar',
         area: 'areaUrban'
       });
@@ -43,8 +58,13 @@ export default function EligibilityWizard({ lang, onSubmitProfile, onCancel }) {
       setProfile({
         age: 34,
         gender: 'Female',
+        isPwd: false,
+        isExServiceman: false,
         income: 'income1to3L',
         occupation: 'occArtisan',
+        degree: 'degreeGrad',
+        stream: 'streamCommerce',
+        percentage: 62,
         category: 'catEWS',
         state: 'Rajasthan',
         area: 'areaRural'
@@ -55,7 +75,7 @@ export default function EligibilityWizard({ lang, onSubmitProfile, onCancel }) {
   const statesList = [
     "Uttar Pradesh", "Bihar", "Rajasthan", "Madhya Pradesh", "Maharashtra",
     "West Bengal", "Tamil Nadu", "Karnataka", "Gujarat", "Odisha",
-    "Punjab", "Haryana", "Telangana", "Kerala", "Assam", "Jharkhand", "Pan-India / All States"
+    "Punjab", "Haryana", "Telangana", "Andhra Pradesh", "Kerala", "Assam", "Jharkhand", "Pan-India / All States"
   ];
 
   const handleNext = () => {
@@ -77,7 +97,7 @@ export default function EligibilityWizard({ lang, onSubmitProfile, onCancel }) {
   return (
     <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
       
-      {/* Wizard Header */}
+      {/* Header */}
       <div className="text-center space-y-3 mb-8">
         <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F4EFEB] border border-[#E7E2D8] text-xs font-mono font-bold text-[#963628] uppercase">
           <Sparkles className="w-3.5 h-3.5" />
@@ -88,7 +108,7 @@ export default function EligibilityWizard({ lang, onSubmitProfile, onCancel }) {
         </h2>
       </div>
 
-      {/* Pre-fill Sample Personas Bar */}
+      {/* Personas Bar */}
       <div className="mb-8 p-4 rounded-xl bg-[#F4EFEB] border border-[#E7E2D8] flex flex-wrap items-center justify-between gap-3 text-xs">
         <span className="font-semibold text-[#57534E] flex items-center gap-1.5">
           <User className="w-4 h-4 text-[#963628]" />
@@ -116,7 +136,7 @@ export default function EligibilityWizard({ lang, onSubmitProfile, onCancel }) {
         </div>
       </div>
 
-      {/* Step Progress Bar */}
+      {/* Progress Bar */}
       <div className="mb-8 space-y-2">
         <div className="flex justify-between items-center text-xs font-mono font-semibold text-[#57534E]">
           <span>{t.stepOf} 0{currentStep} / 05</span>
@@ -131,9 +151,9 @@ export default function EligibilityWizard({ lang, onSubmitProfile, onCancel }) {
       </div>
 
       {/* Step Container Card */}
-      <div className="p-6 sm:p-10 rounded-2xl bg-[#FAF7F2] border border-[#E7E2D8] shadow-sm space-y-8 min-h-[420px] flex flex-col justify-between">
+      <div className="p-6 sm:p-10 rounded-2xl bg-[#FAF7F2] border border-[#E7E2D8] shadow-sm space-y-8 min-h-[440px] flex flex-col justify-between">
         
-        {/* QUESTION STEP 1: Age & Gender */}
+        {/* STEP 1: Age, Gender & Special Status */}
         {currentStep === 1 && (
           <div className="space-y-6 animate-fadeIn">
             <div className="space-y-2">
@@ -149,17 +169,17 @@ export default function EligibilityWizard({ lang, onSubmitProfile, onCancel }) {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
-              {/* Age Slider / Input */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
+              {/* Age Slider */}
               <div className="space-y-3 p-4 rounded-xl bg-[#F4EFEB] border border-[#E7E2D8]">
-                <label className="block text-sm font-semibold text-[#1C1917]">
+                <label className="block text-xs font-bold uppercase text-[#1C1917]">
                   {t.labelAge}
                 </label>
                 <div className="flex items-center gap-4">
                   <input
                     type="range"
-                    min="14"
-                    max="85"
+                    min="16"
+                    max="75"
                     value={profile.age}
                     onChange={(e) => setProfile({ ...profile, age: parseInt(e.target.value) })}
                     className="w-full accent-[#963628] cursor-pointer"
@@ -170,38 +190,76 @@ export default function EligibilityWizard({ lang, onSubmitProfile, onCancel }) {
                 </div>
               </div>
 
-              {/* Gender Radio Grid */}
+              {/* Gender Radio */}
               <div className="space-y-3">
-                <label className="block text-sm font-semibold text-[#1C1917]">
+                <label className="block text-xs font-bold uppercase text-[#1C1917]">
                   {t.labelGender}
                 </label>
-                <div className="space-y-2">
+                <div className="grid grid-cols-3 gap-2">
                   {[
                     { key: 'Female', label: t.genderFemale },
                     { key: 'Male', label: t.genderMale },
-                    { key: 'Other', label: t.genderOther }
+                    { key: 'Other', label: 'Other' }
                   ].map((g) => (
                     <button
                       key={g.key}
                       type="button"
                       onClick={() => setProfile({ ...profile, gender: g.key })}
-                      className={`w-full p-3 text-left rounded-xl border text-sm font-medium transition-all flex items-center justify-between ${
+                      className={`p-2.5 rounded-xl border text-xs font-semibold transition-all ${
                         profile.gender === g.key
-                          ? 'border-[#963628] bg-white text-[#963628] font-bold shadow-sm'
-                          : 'border-[#E7E2D8] bg-[#F4EFEB] text-[#1C1917] hover:border-[#D4CDC1]'
+                          ? 'border-[#963628] bg-white text-[#963628] shadow-sm'
+                          : 'border-[#E7E2D8] bg-[#F4EFEB] text-[#1C1917]'
                       }`}
                     >
-                      <span>{g.label}</span>
-                      {profile.gender === g.key && <CheckCircle2 className="w-4 h-4 text-[#963628]" />}
+                      {g.label}
                     </button>
                   ))}
                 </div>
               </div>
+
+              {/* PwD Status Toggle */}
+              <div className="space-y-2">
+                <label className="block text-xs font-bold uppercase text-[#1C1917]">
+                  {t.labelPwd}
+                </label>
+                <button
+                  type="button"
+                  onClick={() => setProfile({ ...profile, isPwd: !profile.isPwd })}
+                  className={`w-full p-3 rounded-xl border text-xs font-semibold text-left transition-all flex items-center justify-between ${
+                    profile.isPwd
+                      ? 'border-[#963628] bg-white text-[#963628]'
+                      : 'border-[#E7E2D8] bg-[#F4EFEB] text-[#1C1917]'
+                  }`}
+                >
+                  <span>{profile.isPwd ? t.pwdYes : t.pwdNo}</span>
+                  {profile.isPwd && <CheckCircle2 className="w-4 h-4 text-[#963628]" />}
+                </button>
+              </div>
+
+              {/* Ex-Serviceman Status Toggle */}
+              <div className="space-y-2">
+                <label className="block text-xs font-bold uppercase text-[#1C1917]">
+                  {t.labelExServiceman}
+                </label>
+                <button
+                  type="button"
+                  onClick={() => setProfile({ ...profile, isExServiceman: !profile.isExServiceman })}
+                  className={`w-full p-3 rounded-xl border text-xs font-semibold text-left transition-all flex items-center justify-between ${
+                    profile.isExServiceman
+                      ? 'border-[#963628] bg-white text-[#963628]'
+                      : 'border-[#E7E2D8] bg-[#F4EFEB] text-[#1C1917]'
+                  }`}
+                >
+                  <span>{profile.isExServiceman ? t.exServicemanYes : t.exServicemanNo}</span>
+                  {profile.isExServiceman && <CheckCircle2 className="w-4 h-4 text-[#963628]" />}
+                </button>
+              </div>
+
             </div>
           </div>
         )}
 
-        {/* QUESTION STEP 2: Annual Household Income */}
+        {/* STEP 2: Annual Household Income */}
         {currentStep === 2 && (
           <div className="space-y-6 animate-fadeIn">
             <div className="space-y-2">
@@ -242,7 +300,7 @@ export default function EligibilityWizard({ lang, onSubmitProfile, onCancel }) {
           </div>
         )}
 
-        {/* QUESTION STEP 3: Occupation */}
+        {/* STEP 3: Occupation */}
         {currentStep === 3 && (
           <div className="space-y-6 animate-fadeIn">
             <div className="space-y-2">
@@ -286,12 +344,12 @@ export default function EligibilityWizard({ lang, onSubmitProfile, onCancel }) {
           </div>
         )}
 
-        {/* QUESTION STEP 4: Category */}
+        {/* STEP 4: Educational Qualification & Category */}
         {currentStep === 4 && (
           <div className="space-y-6 animate-fadeIn">
             <div className="space-y-2">
               <span className="text-xs font-mono font-bold text-[#963628] uppercase flex items-center gap-1.5">
-                <Layers className="w-4 h-4" />
+                <GraduationCap className="w-4 h-4" />
                 Step 4 of 5
               </span>
               <h3 className="text-2xl sm:text-3xl font-serif text-[#1C1917]">
@@ -302,35 +360,76 @@ export default function EligibilityWizard({ lang, onSubmitProfile, onCancel }) {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-              {[
-                { key: 'catGeneral', label: t.catGeneral },
-                { key: 'catOBC', label: t.catOBC },
-                { key: 'catSC', label: t.catSC },
-                { key: 'catST', label: t.catST },
-                { key: 'catEWS', label: t.catEWS },
-                { key: 'catPwD', label: t.catPwD },
-                { key: 'catWidow', label: t.catWidow }
-              ].map((cat) => (
-                <button
-                  key={cat.key}
-                  type="button"
-                  onClick={() => setProfile({ ...profile, category: cat.key })}
-                  className={`p-3.5 rounded-xl border text-left text-sm transition-all flex items-center justify-between ${
-                    profile.category === cat.key
-                      ? 'border-[#963628] bg-white text-[#963628] font-bold shadow-sm'
-                      : 'border-[#E7E2D8] bg-[#F4EFEB] text-[#1C1917] hover:border-[#D4CDC1]'
-                  }`}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+              {/* Select Degree */}
+              <div className="space-y-2">
+                <label className="block text-xs font-bold uppercase text-[#1C1917]">
+                  {t.labelDegree}
+                </label>
+                <select
+                  value={profile.degree}
+                  onChange={(e) => setProfile({ ...profile, degree: e.target.value })}
+                  className="w-full p-3 rounded-xl bg-white border border-[#D4CDC1] text-xs font-semibold text-[#1C1917]"
                 >
-                  <span>{cat.label}</span>
-                  {profile.category === cat.key && <CheckCircle2 className="w-4 h-4 text-[#963628]" />}
-                </button>
-              ))}
+                  <option value="degree10th">{t.degree10th}</option>
+                  <option value="degree12th">{t.degree12th}</option>
+                  <option value="degreeGrad">{t.degreeGrad}</option>
+                  <option value="degreeTech">{t.degreeTech}</option>
+                  <option value="degreeScienceCom">{t.degreeScienceCom}</option>
+                  <option value="degreePostGrad">{t.degreePostGrad}</option>
+                </select>
+              </div>
+
+              {/* Select Stream */}
+              <div className="space-y-2">
+                <label className="block text-xs font-bold uppercase text-[#1C1917]">
+                  {t.labelStream}
+                </label>
+                <select
+                  value={profile.stream}
+                  onChange={(e) => setProfile({ ...profile, stream: e.target.value })}
+                  className="w-full p-3 rounded-xl bg-white border border-[#D4CDC1] text-xs font-semibold text-[#1C1917]"
+                >
+                  <option value="streamAll">{t.streamAll}</option>
+                  <option value="streamScience">{t.streamScience}</option>
+                  <option value="streamCommerce">{t.streamCommerce}</option>
+                  <option value="streamEngineering">{t.streamEngineering}</option>
+                </select>
+              </div>
+
+              {/* Select Category */}
+              <div className="space-y-2 col-span-1 sm:col-span-2">
+                <label className="block text-xs font-bold uppercase text-[#1C1917]">
+                  {t.labelCategory}
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                  {[
+                    { key: 'catGeneral', label: 'General' },
+                    { key: 'catOBC', label: 'OBC' },
+                    { key: 'catSC', label: 'SC' },
+                    { key: 'catST', label: 'ST' },
+                    { key: 'catEWS', label: 'EWS' }
+                  ].map((cat) => (
+                    <button
+                      key={cat.key}
+                      type="button"
+                      onClick={() => setProfile({ ...profile, category: cat.key })}
+                      className={`p-2.5 rounded-xl border text-xs font-semibold transition-all ${
+                        profile.category === cat.key
+                          ? 'border-[#963628] bg-white text-[#963628] shadow-sm'
+                          : 'border-[#E7E2D8] bg-[#F4EFEB] text-[#1C1917]'
+                      }`}
+                    >
+                      {cat.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         )}
 
-        {/* QUESTION STEP 5: State & Area */}
+        {/* STEP 5: State & Area */}
         {currentStep === 5 && (
           <div className="space-y-6 animate-fadeIn">
             <div className="space-y-2">
@@ -349,13 +448,13 @@ export default function EligibilityWizard({ lang, onSubmitProfile, onCancel }) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
               {/* Select State */}
               <div className="space-y-2">
-                <label className="block text-sm font-semibold text-[#1C1917]">
+                <label className="block text-xs font-bold uppercase text-[#1C1917]">
                   {t.labelState}
                 </label>
                 <select
                   value={profile.state}
                   onChange={(e) => setProfile({ ...profile, state: e.target.value })}
-                  className="w-full p-3.5 rounded-xl bg-white border border-[#D4CDC1] text-sm text-[#1C1917] font-medium focus:outline-none focus:border-[#963628]"
+                  className="w-full p-3.5 rounded-xl bg-white border border-[#D4CDC1] text-sm text-[#1C1917] font-medium focus:outline-none"
                 >
                   {statesList.map(st => (
                     <option key={st} value={st}>{st}</option>
@@ -365,7 +464,7 @@ export default function EligibilityWizard({ lang, onSubmitProfile, onCancel }) {
 
               {/* Select Area */}
               <div className="space-y-2">
-                <label className="block text-sm font-semibold text-[#1C1917]">
+                <label className="block text-xs font-bold uppercase text-[#1C1917]">
                   {t.labelArea}
                 </label>
                 <div className="space-y-2">

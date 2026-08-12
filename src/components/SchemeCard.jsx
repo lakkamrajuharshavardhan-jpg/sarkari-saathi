@@ -1,6 +1,7 @@
 import React from 'react';
 import { Bookmark, ShieldCheck, CheckCircle2, ArrowUpRight, Sparkles, Award } from 'lucide-react';
 import { translations } from '../data/translations';
+import TrustBadge from './TrustBadge';
 
 export default function SchemeCard({
   scheme,
@@ -92,10 +93,7 @@ export default function SchemeCard({
 
       {/* Bottom Footer Action */}
       <div className="pt-3 border-t border-[#E7E2D8] flex items-center justify-between gap-2">
-        <span className="text-[10px] font-mono font-medium text-[#57534E] flex items-center gap-1">
-          <ShieldCheck className="w-3.5 h-3.5 text-[#2D5A43]" />
-          {t.updatedDate}
-        </span>
+        <TrustBadge url={scheme.officialUrl || "https://india.gov.in"} compact={true} />
 
         <button
           onClick={() => onOpenDetails(scheme)}

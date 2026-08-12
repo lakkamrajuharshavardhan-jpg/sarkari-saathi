@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, ExternalLink, ShieldCheck, CheckCircle2, FileText, ListOrdered, Award, Building2, MapPin, Printer } from 'lucide-react';
 import { translations } from '../data/translations';
+import TrustBadge from './TrustBadge';
 
 export default function SchemeDetailDrawer({
   scheme,
@@ -112,7 +113,7 @@ export default function SchemeDetailDrawer({
                   <ShieldCheck className="w-4 h-4 text-[#2D5A43]" />
                   {t.officialSource}
                 </span>
-                <span className="font-mono font-bold">{scheme.verifiedFreshness}</span>
+                <TrustBadge url={scheme.officialUrl || "https://india.gov.in"} />
               </div>
             </div>
           )}
